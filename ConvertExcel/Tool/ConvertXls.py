@@ -35,11 +35,12 @@ class ExcelLoad():
 	def loadDataLua(self,_name,_data):
 		file = open(outPath + _name + "Data.lua","w")
 		file.writelines(_name + " = {\n")
+		file.writelines("cc.exports." + _name + "Data = {\n")
 		cols = _data.ncols
 		rows = _data.nrows
 		for i in range(rows):
 			if(i >= 2):
-				file.write("  [\"" + str(_data.cell(i,1).value) + "\"] = {")
+				file.write("  [\"" + str(self.isType(_data.cell(i,1))) + "\"] = {")
 				for j in range(cols):
 					if(j >= 2):
 						file.write("[\"" + str(_data.cell(1,j).value) + "\"] = ")
@@ -57,7 +58,7 @@ class ExcelLoad():
 		rows = _data.nrows
 		for i in range(rows):
 			if(i >= 2):
-				file.write("    \"" + str(_data.cell(i,1).value) + "\" : {")
+				file.write("    \"" + str(self.isType(_data.cell(i,1))) + "\" : {")
 				for j in range(cols):
 					if( j>= 2):
 						file.write("\"" + str(_data.cell(1,j).value) + "\" : ")
@@ -75,7 +76,7 @@ class ExcelLoad():
 		rows = _data.nrows
 		for i in range(rows):
 			if(i >= 2):
-				file.write("    " + str(_data.cell(i,1).value) + " : {")
+				file.write("    " + str(self.isType(_data.cell(i,1))) + " : {")
 				for j in range(cols):
 					if(j >= 1):
 						file.write(str(_data.cell(1,j).value) + ": ")
