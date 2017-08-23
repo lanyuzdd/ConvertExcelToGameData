@@ -40,7 +40,7 @@ class ExcelLoad():
 		rows = _data.nrows
 		for i in range(rows):
 			if(i >= 2):
-				file.write("  [\"" + str(self.isType(_data.cell(i,1))) + "\"] = {")
+				file.write("  [\"" + str(self.isTypeTitle(_data.cell(i,1))) + "\"] = {")
 				for j in range(cols):
 					if(j >= 2):
 						file.write("[\"" + str(_data.cell(1,j).value) + "\"] = ")
@@ -58,7 +58,7 @@ class ExcelLoad():
 		rows = _data.nrows
 		for i in range(rows):
 			if(i >= 2):
-				file.write("    \"" + str(self.isType(_data.cell(i,1))) + "\" : {")
+				file.write("    \"" + str(self.isTypeTitle(_data.cell(i,1))) + "\" : {")
 				for j in range(cols):
 					if( j>= 2):
 						file.write("\"" + str(_data.cell(1,j).value) + "\" : ")
@@ -76,7 +76,7 @@ class ExcelLoad():
 		rows = _data.nrows
 		for i in range(rows):
 			if(i >= 2):
-				file.write("    " + str(self.isType(_data.cell(i,1))) + " : {")
+				file.write("    " + str(self.isTypeTitle(_data.cell(i,1))) + " : {")
 				for j in range(cols):
 					if(j >= 1):
 						file.write(str(_data.cell(1,j).value) + ": ")
@@ -102,6 +102,13 @@ class ExcelLoad():
 				sr = "false"
 		else:
 			sr = "\"" + str(_st.value) + "\""
+		return sr
+
+	def isTypeTitle(self,_st):
+		if _st.ctype == xlrd.XL_CELL_NUMBER:
+			sr = str(int(_st.value))
+		else:
+			sr = _st.value
 		return sr
 
 def main():
