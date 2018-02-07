@@ -4,6 +4,6 @@ color 3F
 
 set path=C:\Python27
 
-python ConvertXls.py Excel\ OutPut\ json
+python ConvertXls.py -i Excel\ -o OutPut\ -l json
 
 @pause

@@ -1,13 +1,10 @@
 import xlrd
 import os
 import sys
+from optparse import OptionParser
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
-
-inPath = sys.argv[1]
-outPath = sys.argv[2]
-param = sys.argv[3]
 
 class ExcelLoad():
 	def __init__(self,_path):
@@ -15,14 +12,14 @@ class ExcelLoad():
 		self.data = ""
 		self.sheets_name = []
 
-	def covertXml(self,filename):
+	def covertXml(self,_filename):
 		self.data = xlrd.open_workbook(self.path)
 		self.sheets_name = self.data.sheet_names()
 		# for el in self.sheets_name:
 		# 	table = self.data.sheet_by_name(el)
 		# 	self.loadData(el,table)
 		table = self.data.sheet_by_name(self.sheets_name[0])
-		self.loadData(filename.split(".")[0],table)
+		self.loadData(_filename.split(".")[0],table)
 
 	def loadData(self,_name,_data):
 		if(param == "lua"):
@@ -111,12 +108,34 @@ class ExcelLoad():
 			sr = _st.value
 		return sr
 
-def main():
+
+def main():	
 	for parent,dirnames,filenames in os.walk(inPath): 
 		for filename in filenames: 
 			if filename[filename.find("."):] ==".xls" or filename[filename.find("."):] ==".xlsx":                   
 				obj = ExcelLoad(os.path.join(parent,filename))
 				obj.covertXml(filename)
 
+def _check_python_version():
+    major_ver = sys.version_info[0]
+    if major_ver > 2:
+        print ("The python version is %d.%d. But python 2.x is required. (Version 2.7 is well tested)\n"
+               "Download it here: https://www.python.org/" % (major_ver, sys.version_info[1]))
+        return False
+    return True
+
 if __name__ == "__main__":
+	if not _check_python_version():
+		exit()
+
+	parser = OptionParser()
+	parser.add_option('-i', '--input', dest='opt_input', help='directory of input')
+	parser.add_option('-o', '--output', dest='opt_output', help='directory of output')
+	parser.add_option('-l', '--language', dest='opt_language', help='convert language type')
+	opts, args = parser.parse_args()
+
+	inPath = opts.opt_input
+	outPath = opts.opt_output
+	param = opts.opt_language
+
 	main()

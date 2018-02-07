@@ -1,5 +1,5 @@
 *******************************************************************************
-					maker:civi date:2016/12/20  version:1.0
+					maker:civi date:2018/2/7  version:1.1
 *******************************************************************************
 安装(可运行一键安装文件):
 
@@ -11,9 +11,9 @@
 2.windows用户运行转对应格式.bat
 3.Output输出文件夹
 (linux用户使用python文件对应参数:
-	python ConvertXls.py [inputPath] [outputPath] [js|json|lua] 
+	python ConvertXls.py -i [inputPath] -o [outputPath] -l [js|json|lua] 
 	示例:
-	python ConvertXls.py Excel\ OutPut\ lua
+	python ConvertXls.py -i Excel\ -o OutPut\ -l lua
 )
 
 excel数据要求:
